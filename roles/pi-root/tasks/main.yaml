@@ -1,0 +1,21 @@
+---
+- name: Add kube pub key to root authorized keys
+  ansible.posix.authorized_key:
+    user: root
+    key: "{{ lookup('file', '{{ item }}') }}"
+#    exclusive: yes
+    follow: no
+    manage_dir: yes
+  with_items:
+    - ~/.ssh/id_kube.pub
+    - ~/.ssh/id_ed25519.pub
+
+- name: Add conf.d file to allow root to login with keys only
+  copy:
+    src: PermitRootLogin.conf
+    dest: /etc/ssh/ssh_config.d
+    group: root
+    owner: root
+    mode: 0644
+  notify:
+    - reboot server
