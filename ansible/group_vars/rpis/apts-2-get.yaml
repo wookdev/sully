@@ -1,0 +1,11 @@
+---
+needed_apts:
+  - libraspberrypi-bin
+  - rpi-eeprom
+  - tftp-hpa
+  - nfs-common
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+  - gnupg2

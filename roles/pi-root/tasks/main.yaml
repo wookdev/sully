@@ -6,9 +6,7 @@
 #    exclusive: yes
     follow: no
     manage_dir: yes
-  with_items:
-    - ~/.ssh/id_kube.pub
-    - ~/.ssh/id_ed25519.pub
+  with_items: "{{ ssh_root_keys }}"
 
 - name: Add conf.d file to allow root to login with keys only
   copy:

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b0dcab92-948e-4a23-99f1-9bf5b5ce8046" name="mgmt1">
+        <fileTransfer rootFolder="/home/wook/projects/sully" accessType="SFTP" host="192.168.10.164" port="22" sshConfigId="05c83d38-1067-4914-9399-23cbc5d9e1bb" sshConfig="wook@192.168.10.164:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

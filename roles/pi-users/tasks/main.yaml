@@ -1,0 +1,53 @@
+---
+
+- name: Rename user ubuntu to wook
+  ansible.builtin.shell: |
+    killall -u ubuntu
+    usermod -l wook ubuntu
+    groupmod -n wook ubuntu
+    usermod -d /home/wook -m wook
+  args:
+    creates: /home/wook
+
+- name: Clean up cloud config so it doesn't try to re-create ubuntu down the road
+  ansible.builtin.lineinfile:
+    path: /etc/cloud/cloud.cfg
+    regex: '^(.*name:)[ ]+ubuntu'
+    line: '\g<1> wook'
+    backrefs: yes
+
+- name: Add kube group
+  ansible.builtin.group:
+    name: kube
+    gid: 1005
+
+- name: Add kube user
+  ansible.builtin.user:
+    name: kube
+    uid: 1005
+    group: kube
+    groups: kube,sudo
+
+- name: Add kube's ssh key
+  ansible.posix.authorized_key:
+    user: kube
+    key: "{{ lookup('file', '{{ item }}') }}"
+    #    exclusive: yes
+    follow: no
+    manage_dir: yes
+  with_items: "{{ ssh_kube_keys }}"
+
+- name: Add kube's private key
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /home/kube
+  with_items: "{{ ssh_kube_private }}"
+
+- name: Make wook and kube sudo no password
+  ansible.builtin.copy:
+    src: 50-wook-kube-nopasswd
+    dest: /etc/sudoers.d/50-wook-kube-nopasswd
+    owner: root
+    group: root
+    mode: 0440
+    validate: /usr/sbin/visudo -c %s

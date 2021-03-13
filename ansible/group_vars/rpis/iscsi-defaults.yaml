@@ -1,0 +1,7 @@
+---
+
+#
+# iSCSI setup parms
+#
+iscsi_iqn_prefix: iqn.1998-02.net.munged
+iscsi_portal_server: nas-1

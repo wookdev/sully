@@ -1,0 +1,17 @@
+---
+
+- name: Update hosts file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regex: '^127.0.0.1 localhost.*$'
+    line: "127.0.0.1  localhost  {{ ansible_fqdn }} {{ ansible_hostname }}"
+    state: present
+
+- name: Update bootloader config file usercfg.txt
+  ansible.builtin.copy:
+    src: usercfg.txt
+    dest: /boot/firmware/usercfg.txt
+    owner: root
+    group: root
+    mode: 0755
+  notify: reboot server

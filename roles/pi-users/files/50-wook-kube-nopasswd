@@ -1,0 +1,5 @@
+# User rules for wook
+wook ALL=(ALL) NOPASSWD:ALL
+
+# User rules for kube
+kube ALL=(ALL) NOPASSWD:ALL

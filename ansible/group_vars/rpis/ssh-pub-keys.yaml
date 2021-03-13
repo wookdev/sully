@@ -1,0 +1,11 @@
+---
+ssh_root_keys:
+  - ~/.ssh/id_kube.pub
+  - ~/.ssh/id_ed25519.pub
+
+ssh_kube_keys:
+  - ~/.ssh/id_kube.pub
+  - ~/.ssh/id_ed25519.pub
+
+ssh_kube_private:
+  - ~/.ssh/id_kube
