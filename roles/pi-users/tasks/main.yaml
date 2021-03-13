@@ -51,3 +51,12 @@
     group: root
     mode: 0440
     validate: /usr/sbin/visudo -c %s
+
+- name: Copy .vimrc to Pis
+  ansible.builtin.copy:
+    src: .vimrc
+    dest: "{{ item.home }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.owner }}"
+    mode: 0664
+  with_items: "{{ rpi_users }}"

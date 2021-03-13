@@ -1,0 +1,10 @@
+#
+# All users that need common files (.vimrc, profiles, etc)
+#
+rpi_users:
+  - owner: root
+    home: /root/
+  - owner: wook
+    home: /home/wook/
+  - owner: kube
+    home: /home/kube
