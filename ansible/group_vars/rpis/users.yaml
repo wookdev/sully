@@ -2,9 +2,15 @@
 # All users that need common files (.vimrc, profiles, etc)
 #
 rpi_users:
-  - owner: root
-    home: /root/
-  - owner: wook
+  - user: wook
     home: /home/wook/
-  - owner: kube
+  - user: kube
+    home: /home/kube
+
+rpi_all_users:
+  - user: root
+    home: /root/
+  - user: wook
+    home: /home/wook/
+  - user: kube
     home: /home/kube

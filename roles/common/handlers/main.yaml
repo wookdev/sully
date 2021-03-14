@@ -2,3 +2,9 @@
 
 - name: reboot server
   reboot:
+
+- name: restart docker
+  ansible.builtin.systemd:
+    state: restarted
+    name: docker.service
+

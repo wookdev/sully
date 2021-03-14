@@ -56,7 +56,7 @@
   ansible.builtin.copy:
     src: .vimrc
     dest: "{{ item.home }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.owner }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
     mode: 0664
-  with_items: "{{ rpi_users }}"
+  with_items: "{{ rpi_all_users }}"

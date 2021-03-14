@@ -1,6 +1,13 @@
-# sully
+# Sully
 
 Wook's Raspberry Pi k8s cluster management project.
+
+## Why "Sully"?
+
+"Kubernetes" or κυβερνήτης is Greek for "helmsman" or "pilot" or "governor".
+The first pilot I thought of was "Sully" Sullenberger, the hero pilot that
+ditched an airliner in the Hudson River.  So my K8s cluster is
+called Sully.
 
 ## Playbooks:
 

@@ -1,0 +1,3 @@
+- hosts: rpis
+  roles:
+    - role: pi-docker

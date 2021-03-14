@@ -1,5 +1,21 @@
 ---
 
+#
+# Link resolve.conf to a file that has the real nameservers
+# listed in it, rather than the "resolver stub" on 127.0.0.53
+#
+# This is a requirement of Docker
+#
+- name: Fix /etc/resolve.conf so it points to actual nameservers
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+
+#
+# Since we aren't using systemd-resolved for DNS lookups, add
+# our fqdn and hostname to /etc/hosts on the loopback address
+#
 - name: Update hosts file
   ansible.builtin.lineinfile:
     path: /etc/hosts
@@ -7,6 +23,10 @@
     line: "127.0.0.1  localhost  {{ ansible_fqdn }} {{ ansible_hostname }}"
     state: present
 
+#
+# Turn off wifi and bluetooth, amonst other settings in this file
+# It is the identical on all machines
+#
 - name: Update bootloader config file usercfg.txt
   ansible.builtin.copy:
     src: usercfg.txt
