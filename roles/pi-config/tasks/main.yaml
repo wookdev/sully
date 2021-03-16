@@ -24,8 +24,8 @@
     state: present
 
 #
-# Turn off wifi and bluetooth, amonst other settings in this file
-# It is the identical on all machines
+# Turn off wifi and bluetooth, amongst other settings in this file
+# It is identical on all machines
 #
 - name: Update bootloader config file usercfg.txt
   ansible.builtin.copy:
@@ -34,4 +34,13 @@
     owner: root
     group: root
     mode: 0755
+  notify: reboot server
+
+#
+# Add/update some packages we need to have installed
+#
+- name: Install/update assorted packages
+  ansible.builtin.apt:
+    name: "{{ assorted_apts }}"
+    state: latest
   notify: reboot server

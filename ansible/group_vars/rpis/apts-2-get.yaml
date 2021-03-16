@@ -1,5 +1,5 @@
 ---
-needed_apts:
+assorted_apts:
   - libraspberrypi-bin
   - rpi-eeprom
   - tftp-hpa
