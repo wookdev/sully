@@ -1,0 +1,28 @@
+---
+
+#
+# containerd.io is installed via the docker apt repo
+#
+- name: Get docker apt repo gpg key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+
+- name: Create apt repo
+  ansible.builtin.apt_repository:
+    filename: docker
+    repo: "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+    update_cache: yes
+
+- name: Install Containerd.io
+  ansible.builtin.apt:
+    name: "{{ containerd_packages }}"
+
+#
+# Containerd config.toml file with systemd cgroups driver set
+#
+- name: Copy default config.toml file
+  ansible.builtin.copy:
+    src: config.toml
+    dest: /etc/containerd/config.toml
+
