@@ -25,4 +25,4 @@
   ansible.builtin.copy:
     src: config.toml
     dest: /etc/containerd/config.toml
-
+  notify:  restart containerd
