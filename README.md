@@ -2,6 +2,8 @@
 
 Wook's Raspberry Pi k8s cluster management project.
 
+I've restarted the project.  Check the kube project for my current work.
+
 ## Why "Sully"?
 
 "Kubernetes" or κυβερνήτης is Greek for "helmsman" or "pilot" or "governor".

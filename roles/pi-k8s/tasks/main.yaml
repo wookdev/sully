@@ -1,0 +1,45 @@
+---
+
+- name: modprove the br_netfilter module into existence
+  shell:
+    cmd: modprobe br_netfilter
+    creates: /etc/modules-load.d/k8s.conf
+
+- name: Set br_netfilter module to load on boot
+  copy:
+    src: modules-k8s.conf
+    dest: /etc/modules-load.d/k8s.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Set kernel configs to turn on br_netfilter
+  copy:
+    src: sysctl-k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Run sysctl to re-read config
+  shell:
+    cmd: sysctl --system
+
+- name: Get k8s apt repo gpg key
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    keyring: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+- name: Create apt repo
+  ansible.builtin.apt_repository:
+    filename: kubernetes
+    repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+    update_cache: yes
+
+- name: Install Main Kubernetes Komponents (see what I did there? hehehehe)
+  ansible.builtin.apt:
+    name: "{{ k8s_packages }}"
+    state: present
+
+- name: Mark Kubernetes as not to be upgraded
+  shell: apt-mark hold kubelet kubeadm kubectl

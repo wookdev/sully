@@ -1,0 +1,4 @@
+---
+- hosts: rpis
+  roles:
+    - role: pi-k8s

@@ -9,3 +9,7 @@ assorted_apts:
   - curl
   - software-properties-common
   - gnupg2
+  - lsscsi
+  - sg3-utils
+  - multipath-tools
+  - scsitools

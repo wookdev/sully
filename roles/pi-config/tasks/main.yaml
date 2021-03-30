@@ -1,10 +1,19 @@
 ---
 
 #
+# Make sure systemd-resolved.service is running
+#
+- name: Making sure systemd-resolved.service is running
+  ansible.builtin.systemd:
+    name: systemd-resolved.service
+    state: started
+
+#
 # Link resolve.conf to a file that has the real nameservers
 # listed in it, rather than the "resolver stub" on 127.0.0.53
 #
 # This is a requirement of Docker
+# ...and the way Wookie prefers it
 #
 - name: Fix /etc/resolve.conf so it points to actual nameservers
   file:
@@ -24,6 +33,16 @@
     state: present
 
 #
+# The unattended-upgrades service is a nice idea, but we're going to
+# turn it off, since it's been getting in the way
+#
+- name: Disable unattended-upgrades
+  ansible.builtin.systemd:
+    name: unattended-upgrades.service
+    enabled: no
+    state: stopped
+
+#
 # Turn off wifi and bluetooth, amongst other settings in this file
 # It is identical on all machines
 #
@@ -36,6 +55,15 @@
     mode: 0755
   notify: reboot server
 
+#
+# Enable memory cgroup driver
+#
+- name: Turn on memory cgroup
+  ansible.builtin.replace:
+    path: /boot/firmware/cmdline.txt
+    regexp: "fixrtc$"
+    replace: "fixrtc cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1"
+  notify: reboot server
 #
 # Add/update some packages we need to have installed
 #
